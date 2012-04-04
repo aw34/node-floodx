@@ -7,6 +7,36 @@
 		<script src="http://members.shaw.ca/alextcwu/highcharts/js/highcharts.js" type="text/javascript"></script>
 		<script src="/socket.io/socket.io.js"></script>
 		<script src="frontend.js"></script>
+		<script type="text/javascript">
+			function functionChange() {
+                		var input1 = document.getElementById("functionInput1");
+				var input1Text = document.getElementById("text1");
+				var input2 = document.getElementById("functionInput2");
+				var input2Text = document.getElementById("text2");
+				var selection = document.getElementById("ProfileForm").function.options[document.getElementById("ProfileForm").function.options.selectedIndex].value;
+				switch (selection) {
+					case "linear":
+						input1.style.visibility = "visible";
+                    				input2.style.visibility = "visible";
+						input1Text.innerHTML = "Slope";
+						input2Text.innerHTML = "Initial";
+						break;
+					case "exponential":
+	            				input1.style.visibility = "visible";
+                    				input2.style.visibility = "hidden";
+						input1Text.innerHTML = "Base";
+						break;
+					case "sigmoid":
+						input1.style.visibility = "visible";
+                    				input2.style.visibility = "visible";
+						input1Text.innerHTML = "xxx";
+						input2Text.innerHTML = "yyy";
+						break;
+				}
+
+            		}
+
+		</script>
 		<style type="text/css">
 			* {
 				margin: 0;
@@ -41,7 +71,7 @@
 					Benchmark
 					<input type="text" name="url" placeholder="http://www.google.com/" style="width: 300px;"/>
 					using a
-					<select name="function">
+					<select name="function" onchange="functionChange()">
 						<option value="linear">linear</option>
 						<option value="exponential">exponential</option>
 						<option value="sigmoid">sigmoid</option>
@@ -56,6 +86,12 @@
 				<div>
 					<input type="submit" value="Start"/>
 				</div>
+				<div id="functionInput1">
+        				<span id="text1">Slope</span><input name="Field1" type="text" /> 
+    				</div>
+				<div id="functionInput2">
+        				<span id="text2">Initial</span><input name="Field2" type="text" /> 
+    				</div>
 			</form>
 		</div>
 	</body>

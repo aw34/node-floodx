@@ -21,7 +21,6 @@ util.inherits(Profile, EventEmitter);
 Profile.prototype.stop = function() {
 	if (this.status === 'active') {
 		clearInterval(this.timer)
-		console.warn("jkjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj");
 		this.status = 'closing';
 	}
 }
@@ -42,8 +41,7 @@ Profile.prototype.start = function() {
 		requestsSent = 0,
 		waitingOn = 0,
 		more = true;
-		console.warn("start time is",start);
-			console.warn("req needed is",requestsNeeded);
+
 	console.log("Starting profile")
 
 	//Run the timer every 5ms
@@ -66,9 +64,7 @@ Profile.prototype.start = function() {
 			requestPerBlock = requestsPerSecond/(1000/blockTime);
 
 		if (typeof options.timeLimit !== "undefined" && elapsed > options.timeLimit){
-			console.warn(elapsed);
 			console.warn("---------------------------------------------");
-			console.warn(options.timeLimit);
 			return finish();
 		}
 			
@@ -78,7 +74,7 @@ Profile.prototype.start = function() {
 
 		for(var i = 0; i < neededForBlock; ++i) {
 			++waitingOn;
-			console.log(options)
+			//console.log(options)
 			options.agent = false;
 			runner.request(options, (function(requestsPerSecond, result) {
 				
@@ -102,7 +98,7 @@ Profile.prototype.start = function() {
 				return finish()
 		}
 
-		console.log("There have been "+requestsSent+" requests sent.")
+		//console.log("There have been "+requestsSent+" requests sent.")
 
 
 
@@ -170,6 +166,7 @@ var profiles = {
 	linear: function(slope, initial) {
 		slope = slope || 1
 		initial = initial || 1;
+
 		return {
 			base: function(t) {
 				return initial + t*slope;
@@ -221,18 +218,46 @@ io.sockets.on('connection', function(socket) {
 	socket.on('profile', function(options) {
 		var results = [ ], done = false;
 
-		console.log(options)
-		
+		//console.log(options)
+		console.log(options.Field1);
+		console.log(options.Field2);
 		var parts = url.parse(options.url || "http://localhost")
-		console.log(parts)
-		var profile = runner.profile({
-			method: options.method || "GET",
-			host: parts.hostname,
-			port: parseInt(parts.port) || 80,
-			path: parts.path || '/',
-			requestLimit: options.requestLimit || 100000, //request limit is total requests
-			timeLimit: options.timeLimit || 3600*1000 //timelimit is in ms
-		}, profiles.linear(10, 10));
+		//console.log(parts)
+		switch (options.function){
+			case "linear":
+				console.log("LINEARRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR");
+				var profile = runner.profile({
+					method: options.method || "GET",
+					host: parts.hostname,
+					port: parseInt(parts.port) || 80,
+					path: parts.path || '/',
+					requestLimit: options.requestLimit || 100000, //request limit is total requests
+					timeLimit: options.timeLimit || 3600*1000, //timelimit is in ms
+				}, profiles.linear(options.Field1*1, options.Field2*1));
+				break;
+			case "exponential":
+				console.log("EXPPPPPPPPPPPPPPPPPPPPPPPPP");
+				var profile = runner.profile({
+					method: options.method || "GET",
+					host: parts.hostname,
+					port: parseInt(parts.port) || 80,
+					path: parts.path || '/',
+					requestLimit: options.requestLimit || 100000, //request limit is total requests
+					timeLimit: options.timeLimit || 3600*1000, //timelimit is in ms
+				}, profiles.exponential(options.Field1));
+				break;
+			default:
+				console.log("DEFAULT");
+				var profile = runner.profile({
+					method: options.method || "GET",
+					host: parts.hostname,
+					port: parseInt(parts.port) || 80,
+					path: parts.path || '/',
+					requestLimit: options.requestLimit || 100000, //request limit is total requests
+					timeLimit: options.timeLimit || 3600*1000, //timelimit is in ms
+				}, profiles.linear(10, 10));
+				break;
+			}
 
 		currentProfile = profile;
 

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Testbench</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+		<script src="http://members.shaw.ca/alextcwu/highcharts/js/highcharts.js" type="text/javascript"></script>
+		<script src="/socket.io/socket.io.js"></script>
+		<script src="frontend.js"></script>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+				font-family: "Droid Sans", "Arial", sans-serif;
+			}
+
+			body {
+				background: #f0f0f0;
+
+			}
+
+			#Container {
+				width: 900px;
+				margin: 20px auto;
+				padding: 20px;
+				border: solid 1px #c0c0c0;
+				background: #fff;
+				box-shadow: 0 0 10px rgba(0,0,0,0.8);
+			}
+
+			input, select {
+				padding: 4px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="Container">
+			<div id="Chart" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+			<form id="ProfileForm">
+				<div>
+					Benchmark
+					<input type="text" name="url" placeholder="http://www.google.com/" style="width: 300px;"/>
+					using a
+					<select name="function">
+						<option value="linear">linear</option>
+						<option value="exponential">exponential</option>
+						<option value="sigmoid">sigmoid</option>
+						<option>custom</option>
+					</select>
+					profile
+				</div>
+				<div>
+					<input type="checkbox" name="enableRequestLimit"/> limit to <input type="number" name="requestLimit" placeholder="10000"/> total requests
+					<input type="checkbox" name="enableTimeLimit"/> limit to <input type="number" name="timeLimit" placeholder="60"/> total seconds
+				</div>
+				<div>
+					<input type="submit" value="Start"/>
+				</div>
+			</form>
+		</div>
+	</body>
+</html>

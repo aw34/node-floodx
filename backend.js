@@ -113,6 +113,7 @@ function TestRunner() {
 TestRunner.prototype.request = function(options, callback) {
 	var startTime = Date.now() ;
 	var request = http.request(options, function(response) {
+console.log(options.host);
 		//Get how long it took to basically parse the recieve + parse headers
 		//It's not a perfect measurement of latency, but it's decent enough
 		var latency = Date.now() - startTime;

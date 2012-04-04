@@ -21,7 +21,7 @@ util.inherits(Profile, EventEmitter);
 Profile.prototype.stop = function() {
 	if (this.status === 'active') {
 		clearInterval(this.timer)
-		this.status = 'closing';
+		this.status = 'idle';
 	}
 }
 
@@ -223,39 +223,29 @@ io.sockets.on('connection', function(socket) {
 		console.log(options.Field2);
 		var parts = url.parse(options.url || "http://localhost")
 		//console.log(parts)
+		var opts = {	method: options.method || "GET",
+				host: parts.hostname,
+				port: parseInt(parts.port) || 8081,
+				path: parts.path || '/',
+				requestLimit: options.requestLimit || 100000, //request limit is total requests
+				timeLimit: options.timeLimit || 3600*1000, //timelimit is in ms
+		};
 		switch (options.function){
 			case "linear":
 				console.log("LINEARRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR");
-				var profile = runner.profile({
-					method: options.method || "GET",
-					host: parts.hostname,
-					port: parseInt(parts.port) || 80,
-					path: parts.path || '/',
-					requestLimit: options.requestLimit || 100000, //request limit is total requests
-					timeLimit: options.timeLimit || 3600*1000, //timelimit is in ms
-				}, profiles.linear(options.Field1*1, options.Field2*1));
+				var profile = runner.profile(opts, profiles.linear(options.Field1*1, options.Field2*1));
 				break;
 			case "exponential":
 				console.log("EXPPPPPPPPPPPPPPPPPPPPPPPPP");
-				var profile = runner.profile({
-					method: options.method || "GET",
-					host: parts.hostname,
-					port: parseInt(parts.port) || 80,
-					path: parts.path || '/',
-					requestLimit: options.requestLimit || 100000, //request limit is total requests
-					timeLimit: options.timeLimit || 3600*1000, //timelimit is in ms
-				}, profiles.exponential(options.Field1));
+				var profile = runner.profile(opts, profiles.exponential(options.Field1));
+				break;
+			case "sigmoid":
+				console.log("SIGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG");
+				var profile = runner.profile(opts, profiles.sigmoid(1));
 				break;
 			default:
 				console.log("DEFAULT");
-				var profile = runner.profile({
-					method: options.method || "GET",
-					host: parts.hostname,
-					port: parseInt(parts.port) || 80,
-					path: parts.path || '/',
-					requestLimit: options.requestLimit || 100000, //request limit is total requests
-					timeLimit: options.timeLimit || 3600*1000, //timelimit is in ms
-				}, profiles.linear(10, 10));
+				var profile = runner.profile(opts, profiles.linear(10, 10));
 				break;
 			}
 

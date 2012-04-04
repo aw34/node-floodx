@@ -108,6 +108,7 @@ $(function() {
 		}else if (submit.val() === "Stop"){
 
 			socket.emit("stop");
+			submit.attr("value", "Start");
 		}
 		return false;
 	})

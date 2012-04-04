@@ -179,11 +179,12 @@ var profiles = {
 	},
 
 	exponential: function(base) {
-		base = base || e;
+		base = base || 1.1;
 
 		var 
 			e = 2.71828183, 
 			coeff = Math.log(base) / Math.log(e);
+		
 		return {
 			base: function(t) {
 				return Math.pow(base, t)
@@ -240,7 +241,7 @@ io.sockets.on('connection', function(socket) {
 				break;
 			case "exponential":
 				console.log("EXPPPPPPPPPPPPPPPPPPPPPPPPP");
-				var profile = runner.profile(opts, profiles.exponential(options.Field1));
+				var profile = runner.profile(opts, profiles.exponential(options.Field1*1));
 				break;
 			case "sigmoid":
 				console.log("SIGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG");

@@ -98,7 +98,7 @@ Profile.prototype.start = function() {
 				return finish()
 		}
 
-		console.log("There have been "+requestsSent+" requests sent.")
+		//console.log("There have been "+requestsSent+" requests sent.")
 
 
 
@@ -196,6 +196,9 @@ var profiles = {
 
 	//http://mathworld.wolfram.com/SigmoidFunction.html
 	sigmoid: function(x, y) {
+		x = x || 0;
+		y = y || 1;
+
 		var e = 2.71828183
 		return {
 			base: function(t) {
@@ -295,7 +298,7 @@ io.sockets.on('connection', function(socket) {
 		profile.on("result", function(result) {
 			results.push(result)
 		}).on("end", function() {
-			console.warn("DFsdfsdfsdfsdddddddddddddddddddddddddddddddddddddddddddddddddd");
+			//console.warn("DFsdfsdfsdfsdddddddddddddddddddddddddddddddddddddddddddddddddd");
 			done = true;
 		})
 

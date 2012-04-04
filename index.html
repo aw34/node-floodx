@@ -79,19 +79,24 @@
 					</select>
 					profile
 				</div>
+				
+				<div>
+					<span id="functionInput1">
+        				<span id="text1">Slope</span><input name="Field1" type="text" style="width: 300px;"/>
+					</span>
+    				
+					<span id="functionInput2">
+        				<span id="text2">Initial</span><input name="Field2" type="text" style="width: 300px;"/>
+					</span> 
+    				</div>
 				<div>
 					<input type="checkbox" name="enableRequestLimit"/> limit to <input type="number" name="requestLimit" placeholder="10000"/> total requests
 					<input type="checkbox" name="enableTimeLimit"/> limit to <input type="number" name="timeLimit" placeholder="60"/> total seconds
 				</div>
-				<div>
+
+				<div align="right">
 					<input type="submit" value="Start"/>
 				</div>
-				<div id="functionInput1">
-        				<span id="text1">Slope</span><input name="Field1" type="text" /> 
-    				</div>
-				<div id="functionInput2">
-        				<span id="text2">Initial</span><input name="Field2" type="text" /> 
-    				</div>
 			</form>
 		</div>
 	</body>

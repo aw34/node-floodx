@@ -98,7 +98,7 @@ Profile.prototype.start = function() {
 				return finish()
 		}
 
-		//console.log("There have been "+requestsSent+" requests sent.")
+		console.log("There have been "+requestsSent+" requests sent.")
 
 
 
@@ -195,11 +195,11 @@ var profiles = {
 	},
 
 	//http://mathworld.wolfram.com/SigmoidFunction.html
-	sigmoid: function(options) {
+	sigmoid: function(x, y) {
 		var e = 2.71828183
 		return {
 			base: function(t) {
-				return 1 / (1 + Math.pow(e, -t))
+				return 1*y / (1 + Math.pow(e, -(t-x)))
 			},
 			derivative: function(t) {
 				return Math.pow(e, t) / Math.pow(1 + Math.pow(e, t), 2);
@@ -227,8 +227,8 @@ io.sockets.on('connection', function(socket) {
 				host: parts.hostname,
 				port: parseInt(parts.port) || 8081,
 				path: parts.path || '/',
-				requestLimit: options.requestLimit || 100000, //request limit is total requests
-				timeLimit: options.timeLimit || 3600*1000, //timelimit is in ms
+				requestLimit: options.requestLimit*1 || 100000, //request limit is total requests
+				timeLimit: options.timeLimit*1000 || 3600*1000, //timelimit is in ms
 		};
 		switch (options.function){
 			case "linear":
@@ -241,7 +241,7 @@ io.sockets.on('connection', function(socket) {
 				break;
 			case "sigmoid":
 				console.log("SIGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG");
-				var profile = runner.profile(opts, profiles.sigmoid(1));
+				var profile = runner.profile(opts, profiles.sigmoid(options.Field1*1,options.Field2*1));
 				break;
 			default:
 				console.log("DEFAULT");

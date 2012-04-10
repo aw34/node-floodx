@@ -226,11 +226,11 @@ io.sockets.on('connection', function(socket) {
 		//console.log(options)
 		console.log(options.Field1);
 		console.log(options.Field2);
-		var parts = url.parse(options.url || "http://localhost")
+		var parts = url.parse(options.url || "http://localhost:8081")
 		//console.log(parts)
 		var opts = {	method: options.method || "GET",
 				host: parts.hostname,
-				port: parseInt(parts.port) || 8081,
+				port: parseInt(parts.port) || 80,
 				path: parts.path || '/',
 				requestLimit: options.requestLimit*1 || 100000, //request limit is total requests
 				timeLimit: options.timeLimit*1000 || 3600*1000, //timelimit is in ms
